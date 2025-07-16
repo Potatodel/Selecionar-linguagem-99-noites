@@ -1,0 +1,151 @@
+-- Criar ScreenGui
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "LanguageSelector"
+screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+-- Criar Frame principal
+local mainFrame = Instance.new("Frame")
+mainFrame.Name = "MainFrame"
+mainFrame.Size = UDim2.new(0, 300, 0, 200)
+mainFrame.Position = UDim2.new(0.5, -150, 0.5, -100)
+mainFrame.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+mainFrame.BorderSizePixel = 0
+mainFrame.Parent = screenGui
+
+-- Adicionar canto arredondado ao frame
+local mainCorner = Instance.new("UICorner")
+mainCorner.CornerRadius = UDim.new(0, 10)
+mainCorner.Parent = mainFrame
+
+-- Título do frame
+local titleLabel = Instance.new("TextLabel")
+titleLabel.Name = "Title"
+titleLabel.Size = UDim2.new(1, 0, 0, 40)
+titleLabel.Position = UDim2.new(0, 0, 0, 0)
+titleLabel.BackgroundTransparency = 1
+titleLabel.Text = "Selecione o Idioma / Select Language"
+titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+titleLabel.TextScaled = true
+titleLabel.Font = Enum.Font.GothamBold
+titleLabel.Parent = mainFrame
+
+-- Botão Português
+local portugueseButton = Instance.new("TextButton")
+portugueseButton.Name = "PortugueseButton"
+portugueseButton.Size = UDim2.new(0, 120, 0, 50)
+portugueseButton.Position = UDim2.new(0.5, -125, 0.5, -25)
+portugueseButton.BackgroundColor3 = Color3.fromRGB(0, 180, 0)
+portugueseButton.BorderSizePixel = 0
+portugueseButton.Text = "Português 🇧🇷"
+portugueseButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+portugueseButton.TextScaled = true
+portugueseButton.Font = Enum.Font.Gotham
+portugueseButton.Parent = mainFrame
+
+-- Canto arredondado para botão português
+local ptCorner = Instance.new("UICorner")
+ptCorner.CornerRadius = UDim.new(0, 8)
+ptCorner.Parent = portugueseButton
+
+-- Botão English
+local englishButton = Instance.new("TextButton")
+englishButton.Name = "EnglishButton"
+englishButton.Size = UDim2.new(0, 120, 0, 50)
+englishButton.Position = UDim2.new(0.5, 5, 0.5, -25)
+englishButton.BackgroundColor3 = Color3.fromRGB(0, 120, 215)
+englishButton.BorderSizePixel = 0
+englishButton.Text = "English 🇺🇸"
+englishButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+englishButton.TextScaled = true
+englishButton.Font = Enum.Font.Gotham
+englishButton.Parent = mainFrame
+
+-- Canto arredondado para botão inglês
+local enCorner = Instance.new("UICorner")
+enCorner.CornerRadius = UDim.new(0, 8)
+enCorner.Parent = englishButton
+
+-- Botão de fechar
+local closeButton = Instance.new("TextButton")
+closeButton.Name = "CloseButton"
+closeButton.Size = UDim2.new(0, 30, 0, 30)
+closeButton.Position = UDim2.new(1, -35, 0, 5)
+closeButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+closeButton.BorderSizePixel = 0
+closeButton.Text = "X"
+closeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+closeButton.TextScaled = true
+closeButton.Font = Enum.Font.GothamBold
+closeButton.Parent = mainFrame
+
+-- Canto arredondado para botão fechar
+local closeCorner = Instance.new("UICorner")
+closeCorner.CornerRadius = UDim.new(0, 15)
+closeCorner.Parent = closeButton
+
+-- Tornar o frame arrastável
+local dragging = false
+local dragStart = nil
+local startPos = nil
+
+local function updateInput(input)
+    local delta = input.Position - dragStart
+    mainFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+end
+
+mainFrame.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        dragging = true
+        dragStart = input.Position
+        startPos = mainFrame.Position
+        
+        input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then
+                dragging = false
+            end
+        end)
+    end
+end)
+
+mainFrame.InputChanged:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseMovement then
+        if dragging then
+            updateInput(input)
+        end
+    end
+end)
+
+-- Função para executar script português
+portugueseButton.MouseButton1Click:Connect(function()
+    print("Executando script em português...")
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Potatodel/Zeta-hub-portugu-s/refs/heads/main/Universal%20portugu%C3%AAs.md"))()
+    screenGui:Destroy()
+end)
+
+-- Função para executar script inglês
+englishButton.MouseButton1Click:Connect(function()
+    print("Executando script em inglês...")
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Potatodel/Esp-universal-/refs/heads/main/README.md"))()
+    screenGui:Destroy()
+end)
+
+-- Função para fechar o GUI
+closeButton.MouseButton1Click:Connect(function()
+    screenGui:Destroy()
+end)
+
+-- Efeitos de hover nos botões
+local function addHoverEffect(button, originalColor, hoverColor)
+    button.MouseEnter:Connect(function()
+        button.BackgroundColor3 = hoverColor
+    end)
+    
+    button.MouseLeave:Connect(function()
+        button.BackgroundColor3 = originalColor
+    end)
+end
+
+-- Aplicar efeitos de hover
+addHoverEffect(portugueseButton, Color3.fromRGB(0, 180, 0), Color3.fromRGB(0, 200, 0))
+addHoverEffect(englishButton, Color3.fromRGB(0, 120, 215), Color3.fromRGB(0, 140, 235))
+addHoverEffect(closeButton, Color3.fromRGB(255, 0, 0), Color3.fromRGB(255, 50, 50)) 
