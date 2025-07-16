@@ -54,7 +54,7 @@ englishButton.Size = UDim2.new(0, 120, 0, 50)
 englishButton.Position = UDim2.new(0.5, 5, 0.5, -25)
 englishButton.BackgroundColor3 = Color3.fromRGB(0, 120, 215)
 englishButton.BorderSizePixel = 0
-englishButton.Text = "English 🇺🇸"
+englishButton.Text = "English"
 englishButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 englishButton.TextScaled = true
 englishButton.Font = Enum.Font.Gotham
@@ -125,7 +125,7 @@ end)
 -- Função para executar script inglês
 englishButton.MouseButton1Click:Connect(function()
     print("Executando script em inglês...")
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/Potatodel/Esp-universal-/refs/heads/main/README.md"))()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Potatodel/Steal-a-brainrot-Ingles-2/refs/heads/main/99%20noites%20na%20floresta%20kkj%20ingl%C3%AAs"))()
     screenGui:Destroy()
 end)
 
